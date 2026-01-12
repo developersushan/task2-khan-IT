@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>contact </title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <form id="contactForm" class="max-w-md mx-auto space-y-4 shadow-xl py-3 px-6">
+            <h2 class="text-3xl font-semibold py-2">Contact From</h2>
+
+            <!-- Name -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Name</label>
+                <input type="text" id="name"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Your name" />
+                <p id="nameError" class="text-sm text-red-500 mt-1 hidden">
+                    Name is required
+                </p>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Email</label>
+                <input type="email" id="email"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="you@example.com" />
+                <p id="emailError" class="text-sm text-red-500 mt-1 hidden">
+                    Enter a valid email address
+                </p>
+            </div>
+
+            <!-- Message -->
+            <div>
+                <label class="block text-sm font-medium mb-1">Message</label>
+                <textarea id="message" rows="4"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <p id="messageError" class="text-sm text-red-500 mt-1 hidden">
+                    Message is required
+                </p>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                Submit
+            </button>
+        </form>
+
+        <!-- javascript for form validation -->
+        <script>
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Inputs
+                const name = document.getElementById("name");
+                const email = document.getElementById("email");
+                const message = document.getElementById("message");
+
+                // Errors
+                const nameError = document.getElementById("nameError");
+                const emailError = document.getElementById("emailError");
+                const messageError = document.getElementById("messageError");
+                let isValid = true;
+                // reset error
+                [nameError, emailError, messageError].forEach(error => error.classList.add("hidden"));
+                [name, email, message].forEach(input => input.classList.remove('border-red-500'))
+                // Name validation
+                if (name.value.trim() === "") {
+                    nameError.classList.remove("hidden");
+                    name.classList.add("border-red-500");
+                    isValid = false;
+                }
+
+                // Email validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.value.trim())) {
+                    emailError.classList.remove("hidden");
+                    email.classList.add("border-red-500");
+                    isValid = false;
+                }
+
+                // Message validation
+                if (message.value.trim() === "") {
+                    messageError.classList.remove("hidden");
+                    message.classList.add("border-red-500");
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    alert("Form submitted successfully!");
+                    form.reset();
+                }
+            })
+        </script>
+
+    </body>
+
+</html>
